@@ -1,24 +1,19 @@
 import streamlit as st
-from PIL import Image
 
-st.title("👨‍💻 Gokul's Data Science Project Showcase")
-st.write("Explore my portfolio of data-driven projects below:")
+st.set_page_config(page_title="Gokul's Portfolio", layout="centered")
 
-# Project 1: EV Prediction
-st.subheader("🔋 Electric Vehicle Usage Prediction")
-ev_img = Image.open("images/ev_placeholder.png")
-st.image(ev_img, caption="Time-series forecasting with LSTM", use_column_width=True)
-st.markdown("**Overview**: A time-series model using LSTM to forecast electric vehicle usage.")
-st.markdown("[View Code](https://github.com/gokulnambiar/ev-forecasting)")
+st.title("👨‍💻 Gokul's Data Science Portfolio")
+st.markdown("Welcome! Here's a showcase of my work.")
 
-# Project 2: Fraud Detection
-st.subheader("💳 Financial Fraud Detection")
-fraud_img = Image.open("images/fraud_placeholder.png")
-st.image(fraud_img, caption="Random Forest with SHAP explainability", use_column_width=True)
-st.markdown("**Overview**: A model to detect suspicious transactions and interpret results using SHAP.")
-st.markdown("[View Code](https://github.com/gokulnambiar/fraud-detection)")
+# Project dropdown navigation
+project = st.selectbox("🔍 Choose a Project", ["Home", "Churn Prediction - Summary", "Churn Prediction - Demo"])
 
-# Project 3: Image Generation using GANs
-st.subheader("🧠 Image Generation with GANs")
-st.markdown("**Overview**: A DCGAN that generates synthetic handwritten digits.")
-st.markdown("[View Code](https://github.com/gokulnambiar/image-gen-gan)")
+if project == "Churn Prediction - Summary":
+    from projects.ChurnPrediction.pages import page_summary
+    page_summary.render()
+elif project == "Churn Prediction - Demo":
+    from projects.ChurnPrediction.pages import page_demo
+    page_demo.render()
+else:
+    st.subheader("🏠 Home")
+    st.write("Select a project from the dropdown above.")

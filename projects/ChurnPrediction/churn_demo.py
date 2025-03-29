@@ -1,0 +1,81 @@
+import pandas as pd
+import shap
+import streamlit as st
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+
+@st.cache_resource
+def load_data_and_model():
+    df = pd.read_csv("projects/ChurnPrediction/dataset/telco_churn.csv")
+
+    # Clean up and fix TotalCharges to float
+    df = df[df["TotalCharges"] != " "]
+    df["TotalCharges"] = df["TotalCharges"].astype(float)
+    df["Churn"] = df["Churn"].map({"Yes": 1, "No": 0})
+    df = df.drop(columns=["customerID"])
+
+    le_dict = {}
+    for col in df.select_dtypes("object").columns:
+        le = LabelEncoder()
+        df[col] = le.fit_transform(df[col])
+        le_dict[col] = le
+
+    X = df.drop("Churn", axis=1)
+    y = df["Churn"]
+
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X, y)
+
+    return model, X.columns.tolist(), le_dict
+
+model, feature_names, encoders = load_data_and_model()
+
+# --- Streamlit UI ---
+def run_demo():
+    st.title("📊 Real-Time Customer Churn Prediction")
+
+    monthly_charges = st.slider("Monthly Charges", 0, 200, 70)
+    tenure = st.slider("Tenure (Months)", 0, 72, 12)
+    contract = st.selectbox("Contract", ["Month-to-month", "One year", "Two year"])
+    payment_method = st.selectbox("Payment Method", ["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"])
+    tech_support = st.selectbox("Tech Support", ["Yes", "No"])
+    internet_service = st.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
+
+    def transform_input():
+        row = {
+            "MonthlyCharges": monthly_charges,
+            "tenure": tenure,
+            "Contract": encoders["Contract"].transform([contract])[0],
+            "PaymentMethod": encoders["PaymentMethod"].transform([payment_method])[0],
+            "TechSupport": encoders["TechSupport"].transform([tech_support])[0],
+            "InternetService": encoders["InternetService"].transform([internet_service])[0],
+        }
+
+        for feat in feature_names:
+            if feat not in row:
+                row[feat] = 0
+
+        return pd.DataFrame([row])
+
+    if st.button("Predict Churn"):
+        input_df = transform_input()
+        pred = model.predict(input_df)[0]
+        prob = model.predict_proba(input_df)[0][1]
+
+        st.success(f"🔍 Prediction: {'❌ Will Churn' if pred else '✅ Will Not Churn'}")
+        st.info(f"🔢 Confidence: {round(prob * 100, 2)}%")
+
+        explainer = shap.TreeExplainer(model)
+        shap_values = explainer.shap_values(input_df)
+
+        st.write("📉 Feature Contribution (SHAP Waterfall)")
+        fig, ax = plt.subplots()
+        shap.plots._waterfall.waterfall_legacy(
+            explainer.expected_value[1],
+            shap_values[1][0],
+            feature_names=input_df.columns,
+            max_display=6,
+            show=False
+        )
+        st.pyplot(fig)
