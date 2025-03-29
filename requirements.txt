@@ -1,2 +1,6 @@
 streamlit
-Pillow
+pandas
+scikit-learn
+matplotlib
+shap
+pillow
