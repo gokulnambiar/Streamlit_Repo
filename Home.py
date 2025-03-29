@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath("projects/ChurnPrediction"))  # adds the churn m
 
 # Dynamically import page modules
 page_demo_spec = importlib.util.spec_from_file_location(
-    "page_demo", "projects/ChurnPrediction/pages/page_demo.py"
+    "page_demo", "projects/ChurnPrediction/pages/Page_demo.py"
 )
 page_demo = importlib.util.module_from_spec(page_demo_spec)
 page_demo_spec.loader.exec_module(page_demo)
