@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Manually add your project root to sys.path for Streamlit Cloud
+sys.path.append(os.path.abspath("projects"))
+
 from projects.ChurnPrediction.pages import page_demo, page_summary
 
 import streamlit as st
