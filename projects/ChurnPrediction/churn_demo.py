@@ -73,10 +73,18 @@ def run_demo():
         shap_values = explainer.shap_values(input_df)
 
         st.write("📉 Feature Contribution (SHAP Waterfall)")
+        shap_values = explainer.shap_values(input_df)
+
+        # Handle binary classification safely
+        if isinstance(shap_values, list) and len(shap_values) > 1:
+            class_idx = 1  # class "churn"
+        else:
+            class_idx = 0  # fallback for single-class result
+
         fig, ax = plt.subplots()
         shap.plots._waterfall.waterfall_legacy(
-            explainer.expected_value[1],
-            shap_values[1][0],
+            explainer.expected_value[class_idx],
+            shap_values[class_idx][0],
             feature_names=input_df.columns,
             max_display=6,
             show=False
