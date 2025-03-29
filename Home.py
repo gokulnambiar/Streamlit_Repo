@@ -1,7 +1,11 @@
-import importlib.util
 import streamlit as st
+
+st.set_page_config(page_title="Gokul's Portfolio", layout="centered")
+
+import importlib.util
 import os
 import sys
+
 
 # Ensure current directory and subfolders are on sys.path
 sys.path.append(os.path.abspath("."))  # adds root
@@ -20,7 +24,7 @@ page_demo_spec.loader.exec_module(page_demo)
 # page_summary = importlib.util.module_from_spec(page_summary_spec)
 # page_summary_spec.loader.exec_module(page_summary)
 
-st.set_page_config(page_title="Gokul's Portfolio", layout="centered")
+
 
 st.title("👨‍💻 Gokul's Data Science Portfolio")
 st.markdown("Welcome! Here's a showcase of my work.")
