@@ -52,11 +52,14 @@ def run_demo():
             "InternetService": encoders["InternetService"].transform([internet_service])[0],
         }
 
-        for feat in feature_names:
-            if feat not in row:
-                row[feat] = 0
+        # for feat in feature_names:
+        #     if feat not in row:
+        #         row[feat] = 0
 
-        return pd.DataFrame([row])
+        # return pd.DataFrame([row])
+        input_df = pd.DataFrame([row])
+        input_df = input_df.reindex(columns=feature_names, fill_value=0)
+        return input_df
 
     if st.button("Predict Churn"):
         input_df = transform_input()
