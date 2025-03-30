@@ -56,8 +56,8 @@ if "project" in st.session_state:
         st.stop()
 
     elif selected == "Dynamic Pricing - Static Summary":
-        from projects.DynamicPricing.pages import Page_static
-        Page_static.render()
+        from projects.DynamicPricing.pages import price_static_spec
+        price_static.render()
         st.stop()
 
 
