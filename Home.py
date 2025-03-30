@@ -17,11 +17,11 @@ page_demo = importlib.util.module_from_spec(page_demo_spec)
 page_demo_spec.loader.exec_module(page_demo)
 
 # --- Load Dynamic Pricing - Static Summary ---
-price_static_spec = importlib.util.spec_from_file_location(
-    "price_static", "projects/DynamicPricing/pages/1_Price_Insights.py"
-)
-price_static = importlib.util.module_from_spec(price_static_spec)
-price_static_spec.loader.exec_module(price_static)
+# price_static_spec = importlib.util.spec_from_file_location(
+#     "price_static", "projects/DynamicPricing/pages/1_Price_Insights.py"
+# )
+# price_static = importlib.util.module_from_spec(price_static_spec)
+# price_static_spec.loader.exec_module(price_static)
 
 # --- Load Dynamic Pricing - Predict Demo ---
 price_predict_spec = importlib.util.spec_from_file_location(
@@ -42,11 +42,11 @@ with col1:
     if st.button("🔍 Explore Churn Prediction"):
         st.session_state.project = "Churn"
 
-with col2:
-    st.image("assets/pricing.png", width=80)
-    st.subheader("Dynamic Pricing – Summary")
-    if st.button("📈 View Summary & Train"):
-        st.session_state.project = "Dynamic Pricing - Static Summary"
+# with col2:
+#     st.image("assets/pricing.png", width=80)
+#     st.subheader("Dynamic Pricing – Summary")
+#     if st.button("📈 View Summary & Train"):
+#         st.session_state.project = "Dynamic Pricing - Static Summary"
 
 with col3:
     st.image("assets/pricing.png", width=80)
@@ -62,9 +62,9 @@ if "project" in st.session_state:
         page_demo.render()
         st.stop()
 
-    elif selected == "Dynamic Pricing - Static Summary":
-        price_static.render()
-        st.stop()
+    # elif selected == "Dynamic Pricing - Static Summary":
+    #     price_static.render()
+    #     st.stop()
 
     elif selected == "Dynamic Pricing - Predict":
         price_predict.render()
