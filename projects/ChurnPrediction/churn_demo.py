@@ -99,9 +99,17 @@ def run_demo():
         )
         st.pyplot(fig)
         
-        shap_df = pd.DataFrame({
-            "feature": input_df.columns,
-            "shap_value": shap_values[class_idx][0]
-        }).sort_values(by="shap_value", key=abs, ascending=False)
+        # Extract SHAP values for this instance
+        shap_vals = shap_values[class_idx][0]
 
-        st.write("🔬 Full SHAP Breakdown", shap_df)
+        # Align SHAP values with features
+        if len(shap_vals) == len(input_df.columns):
+            shap_df = pd.DataFrame({
+                "Feature": input_df.columns,
+                "SHAP Value": shap_vals
+            }).sort_values(by="SHAP Value", key=abs, ascending=False)
+
+            st.write("🔬 Full SHAP Breakdown:")
+            st.dataframe(shap_df, use_container_width=True)
+        else:
+            st.warning("⚠️ Could not align SHAP values with input features.")
