@@ -27,22 +27,50 @@ price_static_spec.loader.exec_module(price_static)
 st.title("👨‍💻 Gokul's Data Science Portfolio")
 st.markdown("Welcome! Here's a showcase of my work.")
 
-project = st.selectbox("🔍 Choose a Project", [
-    "Home",
-    "Churn",
-    "Dynamic Pricing - Static Summary"
-])
+# project = st.selectbox("🔍 Choose a Project", [
+#     "Home",
+#     "Churn",
+#     "Dynamic Pricing - Static Summary"
+# ])
 
-if project == "Churn":
-    page_demo.render()
-    st.stop()
+col1, col2 = st.columns(2)
+
+with col1:
+    st.image("https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/000000/external-customer-retention-digital-marketing-flatart-icons-outline-flatarticons.png", width=50)
+    st.subheader("Churn Prediction")
+    if st.button("🔍 Explore Churn Prediction"):
+        st.session_state.project = "Churn"
+
+with col2:
+    st.image("https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/000000/external-price-tag-e-commerce-flatart-icons-outline-flatarticons.png", width=50)
+    st.subheader("Dynamic Pricing")
+    if st.button("📈 Explore Dynamic Pricing Summary"):
+        st.session_state.project = "Dynamic Pricing - Static Summary"
+
+if "project" in st.session_state:
+    selected = st.session_state.project
+
+    if selected == "Churn":
+        from projects.ChurnPrediction.pages import Page_demo
+        Page_demo.render()
+        st.stop()
+
+    elif selected == "Dynamic Pricing - Static Summary":
+        from projects.DynamicPricing.pages import Page_static
+        Page_static.render()
+        st.stop()
 
 
-elif project == "Dynamic Pricing - Static Summary":
-    price_static.render()
-    st.stop()
+# if project == "Churn":
+#     page_demo.render()
+#     st.stop()
 
 
-else:
-    st.subheader("🏠 Home")
-    st.write("Select a project from the dropdown above.")
+# elif project == "Dynamic Pricing - Static Summary":
+#     price_static.render()
+#     st.stop()
+
+
+# else:
+#     st.subheader("🏠 Home")
+#     st.write("Select a project from the dropdown above.")
