@@ -1,44 +1,44 @@
 import streamlit as st
-
-st.set_page_config(page_title="Gokul's Portfolio", layout="centered")
-
 import importlib.util
 import os
 import sys
 
+st.set_page_config(page_title="Gokul's Portfolio", layout="centered")
 
-# Ensure current directory and subfolders are on sys.path
-sys.path.append(os.path.abspath("."))  # adds root
-sys.path.append(os.path.abspath("projects/ChurnPrediction"))  # adds the churn module
+sys.path.append(os.path.abspath("."))
+sys.path.append(os.path.abspath("projects/ChurnPrediction"))
+sys.path.append(os.path.abspath("projects/DynamicPricing"))
 
-# Dynamically import page modules
+# --- Churn ---
 page_demo_spec = importlib.util.spec_from_file_location(
     "page_demo", "projects/ChurnPrediction/pages/Page_demo.py"
 )
 page_demo = importlib.util.module_from_spec(page_demo_spec)
 page_demo_spec.loader.exec_module(page_demo)
 
-# page_summary_spec = importlib.util.spec_from_file_location(
-#     "page_summary", "projects/ChurnPrediction/pages/page_summary.py"
-# )
-# page_summary = importlib.util.module_from_spec(page_summary_spec)
-# page_summary_spec.loader.exec_module(page_summary)
+# --- Dynamic Pricing - Static Summary ---
+price_static_spec = importlib.util.spec_from_file_location(
+    "price_static", "projects/DynamicPricing/pages/Page_static.py"
+)
+price_static = importlib.util.module_from_spec(price_static_spec)
+price_static_spec.loader.exec_module(price_static)
 
-
-
+# --- UI ---
 st.title("👨‍💻 Gokul's Data Science Portfolio")
 st.markdown("Welcome! Here's a showcase of my work.")
 
 project = st.selectbox("🔍 Choose a Project", [
     "Home",
-    # "Churn Prediction - Summary",
-    "Churn Prediction - Demo"
+    "Churn",
+    "Dynamic Pricing - Static Summary"
 ])
 
-# if project == "Churn Prediction - Summary":
-#     page_summary.render()
-if project == "Churn Prediction - Demo":
+if project == "Churn":
     page_demo.render()
+
+elif project == "Dynamic Pricing - Static Summary":
+    price_static.render()
+
 else:
     st.subheader("🏠 Home")
     st.write("Select a project from the dropdown above.")
