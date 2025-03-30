@@ -5,6 +5,31 @@ from projects.DynamicPricing import model_utils
 def render():
     st.title("🏡 Predict Airbnb Price")
 
+    st.markdown("""
+    This interactive tool estimates the nightly price of a property based on selected characteristics for making a booking.
+
+    ---
+
+    ### 🗃️ Dataset Used
+    This app is powered by the **Airbnb NYC 2019 dataset**, containing over 48,000 listings:
+    - Covers 5 boroughs: Manhattan, Brooklyn, Queens, Bronx, and Staten Island
+    - Key features used: `room_type`, `neighbourhood_group`, `minimum_nights`, `number_of_reviews`, `reviews_per_month`, `availability_365`
+    - Target variable: **`price`** (USD per night)
+
+    ---
+
+    ### 🤖 Model Info
+    - Model: **XGBoost Regressor**
+    - Encoded categorical variables using `OneHotEncoder`
+    - Built into a `Pipeline` for streamlined preprocessing and prediction
+    - Trained offline and saved as `model.pkl` for use in this demo
+
+    ---
+
+    ### 🧪 Try It Yourself
+    Adjust the listing features below to simulate a property, and hit "Predict Price" to get the model's estimated nightly price.
+    """)
+    
     model = model_utils.load_model()
     df = model_utils.load_data()
 
