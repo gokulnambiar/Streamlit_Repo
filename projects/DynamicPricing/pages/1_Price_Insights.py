@@ -38,3 +38,4 @@ def render():
 # gokulnambiar/streamlit_repo/main/projects/DynamicPricing/pages/2_Predict_Price.py
 
 
+# https://share.streamlit.io/gokulcn/your-repo/pages/2_Predict_Price.py
