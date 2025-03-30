@@ -52,4 +52,4 @@ def render():
 
     if st.button("Predict Price"):
         price = model.predict(input_df)[0]
-        st.success(f"💰 Estimated Price: ${round(price, 2)}")
+        st.success(f"💰 Estimated Price: ${price:.2f}")
