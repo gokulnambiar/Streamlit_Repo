@@ -41,7 +41,8 @@ def run_demo():
     payment_method = st.selectbox("Payment Method", ["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"])
     tech_support = st.selectbox("Tech Support", ["Yes", "No"])
     internet_service = st.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
-    threshold = st.slider("Decision Threshold", 0.0, 1.0, 0.5, 0.05)
+    threshold_percent = st.slider("Decision Threshold (%)", 0, 100, 50, 5)
+    threshold = threshold_percent / 100  # convert to float between 0.0 and 1.0 
     
     def transform_input():
         row = {
