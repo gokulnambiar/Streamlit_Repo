@@ -18,7 +18,7 @@ page_demo_spec.loader.exec_module(page_demo)
 
 # --- Dynamic Pricing - Static Summary ---
 price_static_spec = importlib.util.spec_from_file_location(
-    "price_static", "projects/DynamicPricing/pages/Page_static.py"
+    "price_static", "projects/DynamicPricing/pages/1_Price_Insights.py"
 )
 price_static = importlib.util.module_from_spec(price_static_spec)
 price_static_spec.loader.exec_module(price_static)
