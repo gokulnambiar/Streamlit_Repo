@@ -34,8 +34,9 @@ model, feature_names, encoders = load_data_and_model()
 # --- Streamlit UI ---
 def run_demo():
     
+    st.title("📊 Real-Time Customer Churn Prediction")
+    
     st.markdown("""
-    Welcome to the **Customer Churn Prediction App** 📉  
     Use this tool to simulate different customer profiles and predict whether they are likely to churn based on historical patterns.
 
     ---
@@ -66,8 +67,6 @@ def run_demo():
     - Get prediction + churn probability
     - View feature contribution (SHAP waterfall + full breakdown)
     """)
-
-    st.title("📊 Real-Time Customer Churn Prediction")
 
     monthly_charges = st.slider("Monthly Charges", 0, 200, 70)
     tenure = st.slider("Tenure (Months)", 0, 72, 12)
