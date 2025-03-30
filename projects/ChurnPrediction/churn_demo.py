@@ -33,6 +33,40 @@ model, feature_names, encoders = load_data_and_model()
 
 # --- Streamlit UI ---
 def run_demo():
+    
+    st.markdown("""
+    Welcome to the **Customer Churn Prediction App** 📉  
+    Use this tool to simulate different customer profiles and predict whether they are likely to churn based on historical patterns.
+
+    ---
+
+    ### 🗃️ Dataset Used
+    This demo uses the **Telco Customer Churn dataset**, which includes information about 7043 customers:
+    - Demographics like `gender`, `SeniorCitizen`, `Partner`, `Dependents`
+    - Service details: `InternetService`, `PhoneService`, `TechSupport`, etc.
+    - Financials: `MonthlyCharges`, `TotalCharges`
+    - Contractual information: `Contract`, `PaymentMethod`, `tenure`
+    - Target column: **`Churn`** (Yes/No)
+
+    ---
+
+    ### 🤖 Model Info
+    - Model Type: **Random Forest Classifier**
+    - Categorical columns encoded using **LabelEncoder**
+    - Trained with:
+        - `MonthlyCharges`, `tenure`
+        - `Contract`, `PaymentMethod`, `TechSupport`, `InternetService`
+    - Decision threshold customizable via the slider
+
+    ---
+
+    ### 🔍 What You Can Do
+    - Simulate a customer's profile using the form below
+    - Adjust decision threshold (0–100%)
+    - Get prediction + churn probability
+    - View feature contribution (SHAP waterfall + full breakdown)
+    """)
+
     st.title("📊 Real-Time Customer Churn Prediction")
 
     monthly_charges = st.slider("Monthly Charges", 0, 200, 70)
@@ -43,7 +77,7 @@ def run_demo():
     internet_service = st.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
     threshold_percent = st.slider("Decision Threshold (%)", 0, 100, 50, 5)
     threshold = threshold_percent / 100  # convert to float between 0.0 and 1.0 
-    
+
     def transform_input():
         row = {
             "MonthlyCharges": monthly_charges,
@@ -67,7 +101,7 @@ def run_demo():
         input_df = transform_input()
         # Get probability of churn
         prob = model.predict_proba(input_df)[0][1]
-     
+        
 
         # Make decision based on user-defined threshold
         if prob >= threshold:
