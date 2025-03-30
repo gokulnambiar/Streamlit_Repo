@@ -32,7 +32,7 @@ price_predict_spec.loader.exec_module(price_predict)
 
 # --- UI Layout ---
 st.title("👨‍💻 Project Portfolio")
-st.markdown("Welcome! Here's a showcase of my work:")
+st.markdown("Welcome! Here's a showcase of some of my work:")
 
 col1, col2, col3 = st.columns(3)
 
