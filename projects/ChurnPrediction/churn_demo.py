@@ -41,7 +41,8 @@ def run_demo():
     payment_method = st.selectbox("Payment Method", ["Electronic check", "Mailed check", "Bank transfer (automatic)", "Credit card (automatic)"])
     tech_support = st.selectbox("Tech Support", ["Yes", "No"])
     internet_service = st.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
-
+    threshold = st.slider("Decision Threshold", 0.0, 1.0, 0.5, 0.05)
+    
     def transform_input():
         row = {
             "MonthlyCharges": monthly_charges,
@@ -65,9 +66,7 @@ def run_demo():
         input_df = transform_input()
         # Get probability of churn
         prob = model.predict_proba(input_df)[0][1]
-
-        # Add a prediction threshold slider
-        threshold = st.slider("Decision Threshold", 0.0, 1.0, 0.5, 0.05)
+     
 
         # Make decision based on user-defined threshold
         if prob >= threshold:
