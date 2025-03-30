@@ -35,9 +35,13 @@ project = st.selectbox("🔍 Choose a Project", [
 
 if project == "Churn":
     page_demo.render()
+    st.stop()
+
 
 elif project == "Dynamic Pricing - Static Summary":
     price_static.render()
+    st.stop()
+
 
 else:
     st.subheader("🏠 Home")
