@@ -63,11 +63,19 @@ def run_demo():
 
     if st.button("Predict Churn"):
         input_df = transform_input()
-        pred = model.predict(input_df)[0]
+        # Get probability of churn
         prob = model.predict_proba(input_df)[0][1]
 
-        st.success(f"🔍 Prediction: {'❌ Will Churn' if pred else '✅ Will Not Churn'}")
-        st.info(f"🔢 Confidence: {round(prob * 100, 2)}%")
+        # Add a prediction threshold slider
+        threshold = st.slider("Decision Threshold", 0.0, 1.0, 0.5, 0.05)
+
+        # Make decision based on user-defined threshold
+        if prob >= threshold:
+            st.error(f"❌ Prediction: Will Churn")
+        else:
+            st.success(f"✅ Prediction: Will Not Churn")
+
+        st.info(f"🔢 Churn Probability: {round(prob * 100, 2)}%")
 
         explainer = shap.TreeExplainer(model)
         shap_values = explainer.shap_values(input_df)
@@ -86,7 +94,14 @@ def run_demo():
             explainer.expected_value[class_idx],
             shap_values[class_idx][0],
             feature_names=input_df.columns,
-            max_display=6,
+            max_display=10,
             show=False
         )
         st.pyplot(fig)
+        
+        shap_df = pd.DataFrame({
+            "feature": input_df.columns,
+            "shap_value": shap_values[class_idx][0]
+        }).sort_values(by="shap_value", key=abs, ascending=False)
+
+        st.write("🔬 Full SHAP Breakdown", shap_df)
