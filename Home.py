@@ -24,7 +24,7 @@ price_static = importlib.util.module_from_spec(price_static_spec)
 price_static_spec.loader.exec_module(price_static)
 
 # --- UI ---
-st.title("👨‍💻 Gokul's Data Science Portfolio")
+st.title("👨‍💻 Project Portfolio")
 st.markdown("Welcome! Here's a showcase of my work.")
 
 # project = st.selectbox("🔍 Choose a Project", [
@@ -56,7 +56,7 @@ if "project" in st.session_state:
         st.stop()
 
     elif selected == "Dynamic Pricing - Static Summary":
-        from projects.DynamicPricing.pages import price_static_spec
+        from projects.DynamicPricing.pages import 1_Price_Insights
         price_static.render()
         st.stop()
 
