@@ -21,6 +21,14 @@ def load_data(path="projects/DynamicPricing/dataset/AB_NYC_2019.csv"):
     df = df[df["reviews_per_month"].notnull()]
     return df
 
+def save_model(model, path="projects/DynamicPricing/model.pkl"):
+    joblib.dump(model, path)
+
+def load_model(path="projects/DynamicPricing/model.pkl"):
+    return joblib.load(path)
+
+
+
 def train_model(df):
     X = df[FEATURES]
     y = df[TARGET]
@@ -35,10 +43,9 @@ def train_model(df):
     )
 
     model.fit(X, y)
+    save_model(model, "model.pkl")
     return model
 
-def save_model(model, path="projects/DynamicPricing/model.pkl"):
-    joblib.dump(model, path)
 
-def load_model(path="projects/DynamicPricing/model.pkl"):
-    return joblib.load(path)
+df = load_data("dataset/AB_NYC_2019.csv")
+train_model(df)
