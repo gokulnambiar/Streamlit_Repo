@@ -27,7 +27,7 @@ This app showcases real-time, user-friendly ML demos with explainable prediction
 ## 🛠️ How to Run Locally
 
 ```bash
-git clone https://github.com/yourusername/streamlit-portfolio
+git clone https://github.com/gokulnambiar/Streamlit_Repo.git
 cd streamlit-portfolio
 pip install -r requirements.txt
 streamlit run Home.py
