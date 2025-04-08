@@ -43,9 +43,9 @@ def train_model(df):
     )
 
     model.fit(X, y)
-    save_model(model, "model.pkl")
+    # save_model(model, "model.pkl")
     return model
 
 
-df = load_data("dataset/AB_NYC_2019.csv")
-train_model(df)
+# df = load_data("dataset/AB_NYC_2019.csv")
+# train_model(df)
